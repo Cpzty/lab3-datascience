@@ -1,11 +1,10 @@
 #pasar datos de diesel bajo en azufre a diesel o todos los dieseles a diesel
-setwd("C:/Users/Cristian/Documents/uvg2019 2do semestre/data science/labs/lab3/data")
+#setwd("C:/Users/Cristian/Documents/uvg2019 2do semestre/data science/labs/lab3/data")
+setwd("C:/Users/Usuario Dell/Desktop/S8/Data Science/lab3-datascience/data")
 
 #install.packages("forecast")
 #install.packages("fUnitRoots")
 #install.packages("ggfortify")
-
-
 
 importaciones <- read.csv("datosImp.csv")
 summary(importaciones$GLP)
@@ -62,6 +61,35 @@ lines(density(importaciones$PetroleoReconst))
 summary(importaciones$MTBE)
 hist(importaciones$MTBE, col = "red", prob= T)
 lines(density(importaciones$MTBE))
+
 #serie de tiempo
 class(importaciones$Diesel)
-diesel_tseries <- ts(importaciones$Diesel, start = c(2001,12), end = c(2019,12), frequency = 12)
+diesel_tseries <- ts(importaciones$Diesel, start = c(2001,1), end = c(2019,6), frequency = 12)
+plot(diesel_tseries)
+start(diesel_tseries)
+end(diesel_tseries)
+frequency(diesel_tseries)
+# descomponer la serie
+diesel_tseries.desc <- decompose(diesel_tseries)
+plot(diesel_tseries.desc)
+
+
+class(importaciones$GasSuperior)
+superior_tseries <- ts(importaciones$GasSuperior, start = c(2001,1), end = c(2019,6), frequency = 12)
+plot(superior_tseries)
+start(superior_tseries)
+end(superior_tseries)
+frequency(superior_tseries)
+# descomponer la serie
+superior_tseries.desc <- decompose(superior_tseries)
+plot(superior_tseries.desc)
+
+class(importaciones$GasRegular)
+regular_tseries <- ts(importaciones$GasRegular, start = c(2001,1), end = c(2019,6), frequency = 12)
+plot(regular_tseries)
+start(regular_tseries)
+end(regular_tseries)
+frequency(regular_tseries)
+# descomponer la serie
+regular_tseries.desc <- decompose(regular_tseries)
+plot(regular_tseries.desc)
