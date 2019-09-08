@@ -6,6 +6,10 @@ setwd("C:/Users/Usuario Dell/Desktop/S8/Data Science/lab3-datascience/data")
 #install.packages("fUnitRoots")
 #install.packages("ggfortify")
 
+library("forecast")
+library("fUnitRoots")
+library("ggfortify")
+
 importaciones <- read.csv("datosImp.csv")
 summary(importaciones$GLP)
 qqnorm(importaciones$GLP, main="GLP", col = 2)
@@ -93,3 +97,71 @@ frequency(regular_tseries)
 # descomponer la serie
 regular_tseries.desc <- decompose(regular_tseries)
 plot(regular_tseries.desc)
+
+# Transformaciones de las series
+#Diesel
+#Estabilización de varianza
+plot(log(diesel_tseries))
+#Eliminacion de tendencia
+plot(diff(log(diesel_tseries)))
+#Eliminacion de estaScionalidad 
+plot(diff(diff(log(diesel_tseries)), lag=12))
+#autocovarianza y autocorrelacion
+acf(diff(diff(log(diesel_tseries)), lag=12))
+pacf(diff(diff(log(diesel_tseries)), lag=12))
+
+#modelos
+mod1d <- arima(diesel_tseries,c(1,1,0),c(0,1,1))
+mod1d
+plot(mod1d$residuals)
+mod2d <- arima(diesel_tseries,c(0,1,1),c(0,1,1))
+mod2d
+plot(mod2d$residuals)
+mod3d <- arima(diesel_tseries,c(1,1,1),c(0,1,1))
+mod3d
+plot(mod3d$residuals)
+
+
+# Gas superior 
+#Estabilización de varianza
+plot(log(superior_tseries))
+#Eliminacion de tendencia
+plot(diff(log(superior_tseries)))
+#Eliminacion de estaScionalidad 
+plot(diff(diff(log(superior_tseries)), lag=12))
+#autocovarianza y autocorrelacion
+acf(diff(diff(log(superior_tseries)), lag=12))
+pacf(diff(diff(log(superior_tseries)), lag=12))
+#modelos
+mod1s <- arima(superior_tseries,c(1,1,0),c(0,1,1))
+mod1s
+plot(mod1s$residuals)
+mod2s <- arima(superior_tseries,c(0,1,1),c(0,1,1))
+mod2s
+plot(mod2s$residuals)
+mod3s <- arima(superior_tseries,c(1,1,1),c(0,1,1))
+mod3s
+plot(mod3s$residuals)
+
+
+#Gas regular
+#Estabilización de varianza
+plot(log(regular_tseries))
+#Eliminacion de tendencia
+plot(diff(log(regular_tseries)))
+#Eliminacion de estaScionalidad 
+plot(diff(diff(log(regular_tseries)), lag=12))
+#autocovarianza y autocorrelacion
+acf(diff(diff(log(regular_tseries)), lag=12))
+pacf(diff(diff(log(regular_tseries)), lag=12))
+#modelos
+mod1r <- arima(regular_tseries,c(1,1,0),c(0,1,1))
+mod1r
+plot(mod1r$residuals)
+mod2r <- arima(regular_tseries,c(0,1,1),c(0,1,1))
+mod2r
+plot(mod2r$residuals)
+mod3r <- arima(regular_tseries,c(1,1,1),c(0,1,1))
+mod3r
+plot(mod3r$residuals)
+
